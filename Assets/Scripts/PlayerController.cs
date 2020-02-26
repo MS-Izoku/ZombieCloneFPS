@@ -8,6 +8,7 @@ using Unity.Entities;
 [RequireComponent(typeof(CapsuleCollider))]
 public class PlayerController : MonoBehaviour
 {
+    
     private void Start()
     {
     }
