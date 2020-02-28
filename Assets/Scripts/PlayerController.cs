@@ -81,22 +81,25 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) Jump();
     }
+
     private void OnWalk(InputValue inputValue)
     {
         wasdInput = inputValue.Get<Vector2>();
         ProcessInput();
+        if (wasdInput != Vector2.zero) Debug.Log("NOT ZERO");
     }
 
     private void ProcessInput()
     {
-        Debug.Log("Moving");
+        Debug.Log("Processing Input");
         if (wasdInput.x > 0) velocity += Vector3.right * moveSpeedStrafe;
         else if (wasdInput.x < 0) velocity += Vector3.left * moveSpeedStrafe;
 
         if (wasdInput.y > 0) velocity += Vector3.forward * moveSpeedForward;
         else if (wasdInput.y < 0) velocity += Vector3.back * moveSpeedBackPedal;
-        rb.velocity = velocity;
 
+        if (wasdInput == Vector2.zero) velocity = Vector2.zero;
+        rb.velocity = velocity;
     }
     //#endregion
 
@@ -114,7 +117,5 @@ public class PlayerController : MonoBehaviour
     {
         // NOTE: When ECS is implemented, this will need to be broken up into seperate scripts
         GetInputs();
-        Debug.Log(isGrounded);
-        Debug.DrawLine(transform.position + (Vector3.up * rayDistance), transform.position, Color.red, Mathf.Infinity);
     }
 }
