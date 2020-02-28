@@ -30,6 +30,12 @@ public class Gun : MonoBehaviour
         else Reload();
     }
 
+    public virtual void AimDownSights()
+    {
+        // do camera stuff here
+        // Manage player things in the PlayerController
+    }
+
     public virtual void Reload()
     {
         if (totalAmmoCount == 0) return; // play "cannot reload" animation
