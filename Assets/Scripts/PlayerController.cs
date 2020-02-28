@@ -94,7 +94,8 @@ public class PlayerController : MonoBehaviour
         else if (wasdInput.x < 0) velocity += Vector3.left * moveSpeedStrafe;
 
         if (wasdInput.y > 0) velocity += Vector3.forward * moveSpeedForward;
-        else if (wasdInput.y < 0) velocity += Vector3.back * moveSpeedBackPedal; 
+        else if (wasdInput.y < 0) velocity += Vector3.back * moveSpeedBackPedal;
+        rb.velocity = velocity;
 
     }
     //#endregion
