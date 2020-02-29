@@ -13,12 +13,16 @@ public class ObjectPool : MonoBehaviour
     }
 
     // create the Master Pool
+    // run only once at startup
     public static void CreateMasterPool(GameObject[] poolObjects, Transform parentTransform = null)
     {
-        GameObject parentObj = new GameObject("Object Pool");
-        if(parentTransform != null)
-            parentObj.transform.SetParent(parentTransform);
-        masterPool = parentObj.transform;
+        if(GameObject.Find(masterPoolName) == null)
+        {
+            GameObject parentObj = new GameObject("Object Pool");
+            if (parentTransform != null)
+                parentObj.transform.SetParent(parentTransform);
+            masterPool = parentObj.transform;
+        }
     }
 
     // create basic Object Pool
@@ -38,7 +42,10 @@ public class ObjectPool : MonoBehaviour
     public static void Push(ObjectPool pool, Vector3 pos, Quaternion rot)
     {
         Transform obj = pool.transform.GetChild(0);
-
+        if(obj != null)
+        {
+            ObjectPool.SetPosition(obj, pos, rot);
+        }
     }
 
     public static void PushMultiple(ObjectPool pool, Vector3 pos, Quaternion rot , int quantity)
@@ -50,20 +57,27 @@ public class ObjectPool : MonoBehaviour
         {
             ObjectPool.Push(pool, pos, rot);
         }
-        
     }
 
     // Take multiple objects OUT of the pool
     public static void Push(ObjectPool pool, Vector3 pos, Quaternion rot, int quantity)
     {
-
+        if (quantity > pool.transform.childCount) quantity = pool.transform.childCount;
+        Transform targetObj = pool.transform.GetChild(0);
+        if (targetObj != null)
+        {
+            targetObj.gameObject.SetActive(true);
+            ObjectPool.SetPosition(targetObj, pos, rot);
+            targetObj.SetParent(null);
+        }
     }
 
     // Return an object to the pool
     public static void Pull(ObjectPoolObject obj)
     {
         obj.transform.SetParent(obj.parentPool);
-        ResetPosition(obj.gameObject);
+        ResetPosition(obj.gameObject , obj.parentPool);
+        obj.gameObject.SetActive(false);
     }
 
     // Pull ALL objects in a given pool
@@ -78,23 +92,28 @@ public class ObjectPool : MonoBehaviour
     // Quick Reset for the position, rotation, and Active status in the heirarchy
     private static void ResetPosition(GameObject obj)
     {
-        obj.transform.position = Vector3.zero;
-        obj.transform.rotation = Quaternion.identity;
+        ObjectPool.SetPosition(obj.transform, Vector3.zero, Quaternion.identity);
         obj.SetActive(false);
     }
 
     private static void ResetPosition(GameObject obj, Transform parentTransform)
     {
-        obj.transform.position = Vector3.zero;
-        obj.transform.rotation = Quaternion.identity;
+        ObjectPool.SetPosition(obj.transform, Vector3.zero, Quaternion.identity);
         obj.transform.SetParent(parentTransform);
         obj.SetActive(false);
     }
 
+    // Quick position set
+    private static void SetPosition(Transform obj , Vector3 pos , Quaternion rot)
+    {
+        obj.transform.position = pos;
+        obj.transform.rotation = rot;
+    }
 
+    
+    // A class to attach to all objects in a pool
     public class ObjectPoolObject : MonoBehaviour
     {
         public Transform parentPool;
     }
-
 }
