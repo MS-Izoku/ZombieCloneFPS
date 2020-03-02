@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody rb;
+    private CapsuleCollider collider;
     public Camera cam;
 
     #region Camera Movement System
@@ -38,8 +39,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnWalk(InputValue inputValue)
     {
+
         wasdInput = inputValue.Get<Vector2>();
-        Vector3 velocityCal = new Vector3(0, 0, 0);
 
         if (wasdInput.x != 0)
             velocity += new Vector3(wasdInput.x, 0, 0) * moveSpeedStrafe * Time.deltaTime;
@@ -55,9 +56,7 @@ public class PlayerController : MonoBehaviour
         }
         else velocity.z = 0;
 
-
-        //rb.velocity = velocity;   // This is in FixedUpdate()
-        
+        Debug.Log("Walk " + velocity);
     }
 
     public float moveSpeedSprint = 2f;
@@ -73,21 +72,11 @@ public class PlayerController : MonoBehaviour
 
     #region Jump System
     public float rayDistance;   // distance to check the ray, should be the size of the collider/2
-    public bool isGrounded
-    {
-        get {
-            // cast to the ground and see if it hits
-            return Physics.Raycast(transform.position + (Vector3.up * rayDistance), Vector3.down, rayDistance);
-        }
-    }
     public float jumpForce = 1f;    // force to add to the rigidbody to make it jump
     private void OnJump()
     {
-        if (isGrounded)
-        {
             Debug.Log("JUMP");  // keeping until jumpcheck goes through
-            rb.AddForce(Vector3.up * jumpForce);
-        }
+            rb.AddForce(Vector3.up * jumpForce , ForceMode.Impulse);
     }
     #endregion
 
@@ -100,6 +89,7 @@ public class PlayerController : MonoBehaviour
     {
         //#region ADD TO JUMP SYSTEM
         rb = GetComponent<Rigidbody>();
+        collider = GetComponent<CapsuleCollider>();
         rayDistance = GetComponent<CapsuleCollider>().height / 2;
 
         //#endregion
@@ -122,10 +112,13 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.velocity = velocity;
-        if(rb.velocity != Vector3.zero)
-        {
-            Debug.Log("Walking " + velocity);
-        }
+        rb.velocity = new Vector3(velocity.x , rb.velocity.y , velocity.z);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        CapsuleCollider collider = GetComponent<CapsuleCollider>();
+        Gizmos.DrawWireCube(transform.position, new Vector3(collider.radius *2 , collider.height, collider.radius * 2));
     }
 }
