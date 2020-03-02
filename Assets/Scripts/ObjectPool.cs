@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
@@ -96,6 +94,7 @@ public class ObjectPool : MonoBehaviour
         obj.SetActive(false);
     }
 
+    // Reset Position wtih a target Transform for setting the parent
     private static void ResetPosition(GameObject obj, Transform parentTransform)
     {
         ObjectPool.SetPosition(obj.transform, Vector3.zero, Quaternion.identity);

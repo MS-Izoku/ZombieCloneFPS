@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Walk",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "95704585-9e2a-4a80-9b8c-ee3309f2f594",
                     "expectedControlType": "",
                     "processors": "",
@@ -17,6 +17,38 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "3f3f6f28-249f-470a-947a-58e0cfe7372c",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press"
+                },
+                {
+                    "name": "MoveCam",
+                    "type": "PassThrough",
+                    "id": "fa219773-8efb-4f28-8855-a91e7e18d073",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)"
+                },
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "3e0f2970-5318-413a-b814-ac367d3b3f91",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)"
+                },
+                {
+                    "name": "AimDownSight",
+                    "type": "Button",
+                    "id": "95ab6e56-3d2a-4ce3-8235-6ff10a039ab9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)"
+                },
+                {
+                    "name": "SwitchWeapon",
+                    "type": "Button",
+                    "id": "8d105b19-e666-4b87-8a2a-3c639373464f",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press(behavior=1)"
@@ -40,7 +72,7 @@
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -51,7 +83,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -62,7 +94,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -73,62 +105,7 @@
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Walk",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Controller",
-                    "id": "6272ec8a-a45c-4d47-a5f4-5fe5070d3dd1",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Walk",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "0b6c66e1-e8e6-468a-98c0-4c747d4131c9",
-                    "path": "<Joystick>/stick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Walk",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "d3dcec65-4d65-4ed1-bf6a-084c57781f88",
-                    "path": "<Joystick>/stick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Walk",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "e8c9eeac-dbc1-4a6b-bd42-06098c34b62e",
-                    "path": "<Joystick>/stick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Walk",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "11799a19-cf2e-4e4b-9cc3-072a0223690c",
-                    "path": "<Joystick>/stick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Walk",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -139,7 +116,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Keyboard",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -150,7 +127,7 @@
                     "path": "<XInputController>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Xbox",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -161,13 +138,122 @@
                     "path": "<DualShockGamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "PS4",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b655fbf-2465-4ef7-92f2-1597e0a5cd5e",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "MoveCam",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6d1ad4b3-feef-4658-85a4-9e52084f5952",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "753cc72b-1c96-470e-8f31-e0410aee8d01",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "AimDownSight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c82f8d32-cd58-4f86-939e-05036b63b3c4",
+                    "path": "<XInputController>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98e93349-218c-47a2-8160-2538e1ee66a8",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Vehicle",
+            "id": "cc5f55ff-dd98-4047-a456-fd26cb7d5ed5",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "cc0aba69-8cd1-4ba5-9765-01402b7b4702",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c15276ca-dc7b-4abf-9d81-59dd70d7f9d6",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "Keyboard",
+            "bindingGroup": "Keyboard",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "Xbox",
+            "bindingGroup": "Xbox",
+            "devices": []
+        },
+        {
+            "name": "PS4",
+            "bindingGroup": "PS4",
+            "devices": []
+        }
+    ]
 }

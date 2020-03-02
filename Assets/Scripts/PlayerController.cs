@@ -84,22 +84,22 @@ public class PlayerController : MonoBehaviour
 
     private void OnWalk(InputValue inputValue)
     {
+        
         wasdInput = inputValue.Get<Vector2>();
-        ProcessInput();
-        if (wasdInput != Vector2.zero) Debug.Log("NOT ZERO");
+        if (wasdInput.x > 0) velocity += Vector3.right * moveSpeedStrafe * Time.deltaTime;
+        else if (wasdInput.x < 0) velocity += Vector3.left * moveSpeedStrafe * Time.deltaTime;
+
+        if (wasdInput.y > 0) velocity += Vector3.forward * moveSpeedForward * Time.deltaTime;
+        else if (wasdInput.y < 0) velocity += Vector3.back * moveSpeedBackPedal * Time.deltaTime;
+
+        if (wasdInput == Vector2.zero) velocity = Vector2.zero;
+        Debug.Log("Walking " + velocity);
+        //rb.velocity = velocity;   // This is in FixedUpdate()
     }
 
     private void ProcessInput()
     {
-        Debug.Log("Processing Input");
-        if (wasdInput.x > 0) velocity += Vector3.right * moveSpeedStrafe;
-        else if (wasdInput.x < 0) velocity += Vector3.left * moveSpeedStrafe;
 
-        if (wasdInput.y > 0) velocity += Vector3.forward * moveSpeedForward;
-        else if (wasdInput.y < 0) velocity += Vector3.back * moveSpeedBackPedal;
-
-        if (wasdInput == Vector2.zero) velocity = Vector2.zero;
-        rb.velocity = velocity;
     }
     //#endregion
 
@@ -117,5 +117,10 @@ public class PlayerController : MonoBehaviour
     {
         // NOTE: When ECS is implemented, this will need to be broken up into seperate scripts
         GetInputs();
+    }
+
+    private void FixedUpdate()
+    {
+        rb.velocity = velocity;
     }
 }
