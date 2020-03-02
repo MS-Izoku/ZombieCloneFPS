@@ -22,7 +22,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                     ""name"": ""Walk"",
                     ""type"": ""PassThrough"",
                     ""id"": ""95704585-9e2a-4a80-9b8c-ee3309f2f594"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 },
@@ -62,6 +62,14 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                     ""name"": ""SwitchWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""8d105b19-e666-4b87-8a2a-3c639373464f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)""
+                },
+                {
+                    ""name"": ""Sprint"",
+                    ""type"": ""Button"",
+                    ""id"": ""e037ad93-c237-4176-bfa3-28389e870b03"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=1)""
@@ -72,7 +80,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                     ""name"": ""WASD"",
                     ""id"": ""119cffe8-0265-438a-a0f1-09af7db5f392"",
                     ""path"": ""2DVector"",
-                    ""interactions"": ""Hold,Press(behavior=1)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Walk"",
@@ -182,7 +190,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""753cc72b-1c96-470e-8f31-e0410aee8d01"",
                     ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold,Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""AimDownSight"",
@@ -208,6 +216,17 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""SwitchWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fb341dc4-3a74-4c56-af9c-c45f3bcd9763"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": ""Hold,Press(pressPoint=0.5)"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -278,6 +297,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
         m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
         m_Player_AimDownSight = m_Player.FindAction("AimDownSight", throwIfNotFound: true);
         m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
+        m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         // Vehicle
         m_Vehicle = asset.FindActionMap("Vehicle", throwIfNotFound: true);
         m_Vehicle_Newaction = m_Vehicle.FindAction("New action", throwIfNotFound: true);
@@ -336,6 +356,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Shoot;
     private readonly InputAction m_Player_AimDownSight;
     private readonly InputAction m_Player_SwitchWeapon;
+    private readonly InputAction m_Player_Sprint;
     public struct PlayerActions
     {
         private @PlayerInputsController m_Wrapper;
@@ -346,6 +367,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
         public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
         public InputAction @AimDownSight => m_Wrapper.m_Player_AimDownSight;
         public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
+        public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -373,6 +395,9 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                 @SwitchWeapon.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapon;
                 @SwitchWeapon.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSwitchWeapon;
+                @Sprint.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
+                @Sprint.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
+                @Sprint.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -395,6 +420,9 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                 @SwitchWeapon.started += instance.OnSwitchWeapon;
                 @SwitchWeapon.performed += instance.OnSwitchWeapon;
                 @SwitchWeapon.canceled += instance.OnSwitchWeapon;
+                @Sprint.started += instance.OnSprint;
+                @Sprint.performed += instance.OnSprint;
+                @Sprint.canceled += instance.OnSprint;
             }
         }
     }
@@ -467,6 +495,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
         void OnShoot(InputAction.CallbackContext context);
         void OnAimDownSight(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
+        void OnSprint(InputAction.CallbackContext context);
     }
     public interface IVehicleActions
     {

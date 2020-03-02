@@ -9,7 +9,7 @@
                     "name": "Walk",
                     "type": "PassThrough",
                     "id": "95704585-9e2a-4a80-9b8c-ee3309f2f594",
-                    "expectedControlType": "",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": ""
                 },
@@ -49,6 +49,14 @@
                     "name": "SwitchWeapon",
                     "type": "Button",
                     "id": "8d105b19-e666-4b87-8a2a-3c639373464f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)"
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Button",
+                    "id": "e037ad93-c237-4176-bfa3-28389e870b03",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "Press(behavior=1)"
@@ -59,7 +67,7 @@
                     "name": "WASD",
                     "id": "119cffe8-0265-438a-a0f1-09af7db5f392",
                     "path": "2DVector",
-                    "interactions": "Hold,Press(behavior=1)",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Walk",
@@ -169,7 +177,7 @@
                     "name": "",
                     "id": "753cc72b-1c96-470e-8f31-e0410aee8d01",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "",
+                    "interactions": "Hold,Press(behavior=2)",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "AimDownSight",
@@ -195,6 +203,17 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "SwitchWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fb341dc4-3a74-4c56-af9c-c45f3bcd9763",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Hold,Press(pressPoint=0.5)",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
