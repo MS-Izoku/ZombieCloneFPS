@@ -14,6 +14,19 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider collider;
     public Camera cam;
 
+    public Gun[] guns;
+
+    #region Gernade System
+    public Gernade[] gernades;
+    public int[] gernadeCount;
+
+    private void OnGernadeThrow()
+    {
+
+    }
+
+    #endregion
+
     #region Camera Movement System
     public float camMoveSpeed = 1;
     public bool cameraBob = false;
@@ -56,7 +69,7 @@ public class PlayerController : MonoBehaviour
         }
         else velocity.z = 0;
 
-        Debug.Log("Walk " + velocity);
+       // Debug.Log("Walk " + velocity);
     }
 
     public float moveSpeedSprint = 2f;
@@ -80,7 +93,19 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
- 
+    #region Points System
+    public int points = 0;
+
+    public void GetPoints(int quantity)
+    {
+        points += quantity;
+    }
+    
+    public void LosePoints(int quantity)
+    {
+        points = Mathf.Clamp(points - quantity, 0, 999999999);
+    }
+    #endregion
 
 
 
@@ -110,9 +135,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Switch Weapon");
     }
 
+
+
     private void FixedUpdate()
     {
         rb.velocity = new Vector3(velocity.x , rb.velocity.y , velocity.z);
+        //rb.AddForce(velocity , );
     }
 
     private void OnDrawGizmos()
@@ -120,5 +148,15 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.green;
         CapsuleCollider collider = GetComponent<CapsuleCollider>();
         Gizmos.DrawWireCube(transform.position, new Vector3(collider.radius *2 , collider.height, collider.radius * 2));
+    }
+
+    public void GiveItem(Gun gunPrefab)
+    {
+
+    }
+
+    public void GiveItem(Gernade gernadePrefab)
+    {
+
     }
 }

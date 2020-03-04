@@ -39,14 +39,6 @@ public class Gun : MonoBehaviour
 
     // public Image reticle; // make some kind of image for the reticle?
 
-    private AudioSource audioSource;
-
-    private void Awake()
-    {
-        
-    }
-
-
     public float reticleRadius = 1f;
     [HideInInspector] public bool aimingDownSight = false;
     public virtual void AimDownSights()

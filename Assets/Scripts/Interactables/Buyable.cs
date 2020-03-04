@@ -2,17 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider))]
+[RequireComponent(typeof(Rigidbody))]
 public class Buyable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [HideInInspector] public bool inRange = false;
+    public GameObject item;
+    public int cost;
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.tag == "Player")
+            inRange = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        
+        if(other.tag == "Player")
+            inRange = false;
+    }
+
+    public virtual void Buy(PlayerController player)
+    {
+        if(player.points >= cost)
+        {
+            player.LosePoints(cost);
+            // give the player the item
+        }
     }
 }

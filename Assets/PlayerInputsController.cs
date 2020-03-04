@@ -73,6 +73,14 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=1)""
+                },
+                {
+                    ""name"": ""GernadeThrow"",
+                    ""type"": ""Button"",
+                    ""id"": ""d05fe39b-e2cd-4524-9654-d91f054693ba"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=1)""
                 }
             ],
             ""bindings"": [
@@ -229,6 +237,17 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                     ""action"": ""Sprint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""87e79ec9-ca1c-4597-9b7a-2d4e8daab9f0"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""GernadeThrow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -298,6 +317,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
         m_Player_AimDownSight = m_Player.FindAction("AimDownSight", throwIfNotFound: true);
         m_Player_SwitchWeapon = m_Player.FindAction("SwitchWeapon", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+        m_Player_GernadeThrow = m_Player.FindAction("GernadeThrow", throwIfNotFound: true);
         // Vehicle
         m_Vehicle = asset.FindActionMap("Vehicle", throwIfNotFound: true);
         m_Vehicle_Newaction = m_Vehicle.FindAction("New action", throwIfNotFound: true);
@@ -357,6 +377,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_AimDownSight;
     private readonly InputAction m_Player_SwitchWeapon;
     private readonly InputAction m_Player_Sprint;
+    private readonly InputAction m_Player_GernadeThrow;
     public struct PlayerActions
     {
         private @PlayerInputsController m_Wrapper;
@@ -368,6 +389,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
         public InputAction @AimDownSight => m_Wrapper.m_Player_AimDownSight;
         public InputAction @SwitchWeapon => m_Wrapper.m_Player_SwitchWeapon;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+        public InputAction @GernadeThrow => m_Wrapper.m_Player_GernadeThrow;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -398,6 +420,9 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                 @Sprint.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
+                @GernadeThrow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGernadeThrow;
+                @GernadeThrow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGernadeThrow;
+                @GernadeThrow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnGernadeThrow;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -423,6 +448,9 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @GernadeThrow.started += instance.OnGernadeThrow;
+                @GernadeThrow.performed += instance.OnGernadeThrow;
+                @GernadeThrow.canceled += instance.OnGernadeThrow;
             }
         }
     }
@@ -496,6 +524,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
         void OnAimDownSight(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
+        void OnGernadeThrow(InputAction.CallbackContext context);
     }
     public interface IVehicleActions
     {
