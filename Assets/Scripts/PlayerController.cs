@@ -14,10 +14,12 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider collider;
     public Camera cam;
 
-    public Gun[] guns;
+    public List<Gun> guns = new List<Gun>();
+    public Gun equippedGun;
+    public int maxGuns = 2;
 
     #region Gernade System
-    public Gernade[] gernades;
+    public List<Gernade> gernades = new List<Gernade>();
     public int[] gernadeCount;
 
     private void OnGernadeThrow()
@@ -54,7 +56,7 @@ public class PlayerController : MonoBehaviour
     {
 
         wasdInput = inputValue.Get<Vector2>();
-
+        isMoving = true;
         if (wasdInput.x != 0)
             velocity += new Vector3(wasdInput.x, 0, 0) * moveSpeedStrafe * Time.deltaTime;
         else velocity.x = 0;
@@ -67,15 +69,38 @@ public class PlayerController : MonoBehaviour
         {
             velocity += transform.forward * -moveSpeedBackPedal * Time.deltaTime;
         }
-        else velocity.z = 0;
+        else
+        {
+            velocity.z = 0;
+            isMoving = false;
+        }
 
        // Debug.Log("Walk " + velocity);
     }
 
-    public float moveSpeedSprint = 2f;
-    private void OnSprint()
+    public float sprintMultiplier = 2f;
+    public float stamina = 100f;
+    public float staminaRecovery = 1f;
+    private float maxStamina;
+
+    private void OnSprint(InputValue inputValue)
     {
-        
+        if(inputValue.isPressed && stamina > 0)
+        {
+            stamina -= Time.deltaTime;
+            velocity *= sprintMultiplier;
+            // coroutine to manage stamina in realtime?
+        }
+        StartCoroutine(RecoverStamina());
+    }
+
+    private IEnumerator RecoverStamina()
+    {
+        while(stamina != maxStamina)
+        {
+            stamina += staminaRecovery * Time.deltaTime;
+            yield return null;
+        }
     }
     #endregion
 
@@ -107,6 +132,34 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Gun Buying
+    public void GiveItem(Gun gunPrefab)
+    {
+        if (guns.Count > maxGuns)
+        {
+
+        }
+        else {
+            guns.Add(gunPrefab);
+        }
+            
+    }
+
+    public void GiveItem(Gernade gernadePrefab)
+    {
+
+    }
+
+    public void GiveTemporaryItem(Gun gunPrefab)
+    {
+
+    }
+
+    public void GiveTemporaryItem(Gernade gernadePrefab)
+    {
+
+    }
+    #endregion
 
 
 
@@ -116,6 +169,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<CapsuleCollider>();
         rayDistance = GetComponent<CapsuleCollider>().height / 2;
+        maxStamina = stamina;
 
         //#endregion
     }
@@ -148,15 +202,5 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.green;
         CapsuleCollider collider = GetComponent<CapsuleCollider>();
         Gizmos.DrawWireCube(transform.position, new Vector3(collider.radius *2 , collider.height, collider.radius * 2));
-    }
-
-    public void GiveItem(Gun gunPrefab)
-    {
-
-    }
-
-    public void GiveItem(Gernade gernadePrefab)
-    {
-
     }
 }
