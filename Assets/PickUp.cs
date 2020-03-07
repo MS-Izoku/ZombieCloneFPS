@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SphereCollider))]
 public class PickUp : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    void Awake() {
+       GetComponent<SphereCollider>().isTrigger = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.tag == "Player")
+        {
+            PickUpEffect();
+            if(GetComponent<ObjectPool.ObjectPoolObject>() != null)
+                ObjectPool.Pull(GetComponent<ObjectPool.ObjectPoolObject>());
+        }
+    }
+
+    public virtual void PickUpEffect()
+    {
+        Debug.Log("Pick Up");
     }
 }
