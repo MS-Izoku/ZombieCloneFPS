@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class FPSGameManager : MonoBehaviour
 {
-    public static List<PlayerController> players = new List<PlayerController>();
-    public static int pointsMultipler = 1;
-    public static float speedMultiplier = 1f;
-    public static float jumpForceMultiplier = 1f;
+    public List<PlayerController> players = new List<PlayerController>();
 
-    public struct stats
+    public int pointsMultipler = 1;
+    public float speedMultiplier = 1f;
+    public float jumpForceMultiplier = 1f;
+
+    public int round = 1;
+    public static FPSGameManager instance;
+
+    public struct Stats
     {
         public string playerName;
         public int killCount;
@@ -17,12 +21,21 @@ public class FPSGameManager : MonoBehaviour
         public int points;
     }
 
-    public List<stats> gameStats = new List<stats>();
+    public List<Stats> gameStats = new List<Stats>();
 
     private void Awake()
     {
+        instance = this;
+        #region Get Players
+        GameObject[] playerObjs = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < playerObjs.Length; i++)
+        {
+            players.Add(playerObjs[i].GetComponent<PlayerController>());
+        }
+        #endregion
         // get all players
         // add players to stat board
+
     }
 
     public static void DoublePoints()
@@ -53,6 +66,17 @@ public class FPSGameManager : MonoBehaviour
     public static void GiveRandomPowerUp()
     {
         
+    }
+
+    public static void NextRound(FPSGameManager gameManager)
+    {
+        bool beginSpawning = false;
+        gameManager.round++;
+        instance.StartCoroutine(instance.Timer(10, beginSpawning));
+        if (beginSpawning)
+        {
+            // do some round starting stuff here
+        }
     }
 
     private IEnumerator Timer(float time, bool powerActive)
