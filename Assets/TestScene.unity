@@ -132,6 +132,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Workbench (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: a09837bc152a9b9459581f48bee12074, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: a09837bc152a9b9459581f48bee12074, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.8
@@ -832,6 +836,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Workbench (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: a09837bc152a9b9459581f48bee12074, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: a09837bc152a9b9459581f48bee12074, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.47
@@ -892,6 +900,7 @@ GameObject:
   - component: {fileID: 1094348458}
   - component: {fileID: 1094348457}
   - component: {fileID: 1094348461}
+  - component: {fileID: 1094348462}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -921,22 +930,31 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1094348455}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b16bdf5fd1c40149872a1a00f2ad8c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  guns: []
+  equippedGun: {fileID: 0}
+  maxGuns: 2
+  gernades: []
+  gernadeCount: 
   camMoveSpeed: 1
   cameraBob: 0
   isMoving: 0
   moveSpeedForward: 200
   moveSpeedBackPedal: 100
   moveSpeedStrafe: 150
-  moveSpeedSprint: 300
+  sprintMultiplier: 2
+  stamina: 100
+  staminaRecovery: 1
   platform: {fileID: 0}
   rayDistance: 0
   jumpForce: 100
+  points: 0
+  reticleTarget: {fileID: 0}
 --- !u!136 &1094348458
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1037,6 +1055,18 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1094348462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094348455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a16ee5271015f44bb97f6419624edba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1176128956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1316,6 +1346,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Workbench (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: a09837bc152a9b9459581f48bee12074, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: a09837bc152a9b9459581f48bee12074, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.58
@@ -1372,6 +1406,10 @@ PrefabInstance:
     - target: {fileID: 100010, guid: a09837bc152a9b9459581f48bee12074, type: 3}
       propertyPath: m_Name
       value: Workbench
+      objectReference: {fileID: 0}
+    - target: {fileID: 100010, guid: a09837bc152a9b9459581f48bee12074, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400010, guid: a09837bc152a9b9459581f48bee12074, type: 3}
       propertyPath: m_LocalPosition.x

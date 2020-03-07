@@ -187,7 +187,7 @@ public class @PlayerInputsController : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""6d1ad4b3-feef-4658-85a4-9e52084f5952"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Shoot"",

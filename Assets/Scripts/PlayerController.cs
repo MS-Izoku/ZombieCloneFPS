@@ -83,15 +83,23 @@ public class PlayerController : MonoBehaviour
     public float staminaRecovery = 1f;
     private float maxStamina;
 
+    /*
     private void OnSprint(InputValue inputValue)
     {
         if(inputValue.isPressed && stamina > 0)
         {
-            stamina -= Time.deltaTime;
-            velocity *= sprintMultiplier;
+            StartCoroutine(WaitForSprintEnd(inputValue.isPressed));   
             // coroutine to manage stamina in realtime?
         }
-        StartCoroutine(RecoverStamina());
+    }
+    private IEnumerator WaitForSprintEnd(bool pressed) {
+        while (pressed)
+        {
+            Debug.Log("Sprinting!");
+            velocity *= sprintMultiplier;
+            stamina -= Time.deltaTime;
+            yield return null;
+        }
     }
 
     private IEnumerator RecoverStamina()
@@ -102,6 +110,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
     }
+    */
     #endregion
 
     //#region Moving Platform Handler
@@ -161,25 +170,13 @@ public class PlayerController : MonoBehaviour
     }
     #endregion
 
-
-
-    private void Start()
-    {
-        //#region ADD TO JUMP SYSTEM
-        rb = GetComponent<Rigidbody>();
-        collider = GetComponent<CapsuleCollider>();
-        rayDistance = GetComponent<CapsuleCollider>().height / 2;
-        maxStamina = stamina;
-
-        //#endregion
-    }
-
     private void OnShoot()
     {
         Debug.Log("Shoot");
     }
 
-    private void OnAimDownSight()
+    [HideInInspector] public Transform reticleTarget;
+    private void OnAimDownSight(InputValue value)
     {
         Debug.Log("Aim Down Sight");
     }
@@ -190,6 +187,15 @@ public class PlayerController : MonoBehaviour
     }
 
 
+    private void Start()
+    {
+        //#region ADD TO JUMP SYSTEM
+        rb = GetComponent<Rigidbody>();
+        collider = GetComponent<CapsuleCollider>();
+        rayDistance = GetComponent<CapsuleCollider>().height / 2;
+        maxStamina = stamina;
+        //#endregion
+    }
 
     private void FixedUpdate()
     {

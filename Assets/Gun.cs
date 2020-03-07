@@ -7,6 +7,8 @@ using UnityEngine.Audio;
 public class Gun : MonoBehaviour
 {
     public string gun_name = "Gun Name";
+    public Transform aimDownSightPoint;
+    public Transform barrelPoint;
 
     //#region Ammo System
     public int magazineSize = 30;    // actual size of the magazine
@@ -43,8 +45,16 @@ public class Gun : MonoBehaviour
     [HideInInspector] public bool aimingDownSight = false;
     public virtual void AimDownSights()
     {
-        // do camera stuff here
+
+        // do camera sretuff here
         // Manage player things in the PlayerController
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(aimDownSightPoint.position, 0.5f);
+        Gizmos.DrawLine(barrelPoint.position, transform.forward * 100);
     }
 
 }
